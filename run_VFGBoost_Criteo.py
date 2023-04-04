@@ -9,25 +9,8 @@ from utils.utils import configuration
 def train(config):
     
     configuration(config)
-    if config['feature_split_mode'] == 1:
-        # Feature split mode 1
-        config['local_features'] = []
-        config['boost_features'] = [
-        ]
-
-    elif config['feature_split_mode'] == 2:
-        # Feature split mode 2
-        # Active party less features
-        # This is better. 
-        config['local_features'] = ["I1", "C1", "C2", "C3", 'C7' ]
-        config['boost_features'] = [
-            ['I11', 'I4', 'C4', 'C9', 'C22', 'C23'],
-            ['I5', 'I6', 'C12', 'C13', 'C14', "C5"],
-            ['I7', 'I8', 'C15', 'C16', 'C17', "C6"],
-            ['I9', 'I10', 'C18', 'C19', 'C20', 'C8'],
-            ['I3', 'I12', 'C21', 'C10', 'C11'],  # Replace C10, C11 <==> C22, C23 in party 1. I3, I4 <=> I11, I12
-            ['I13', 'I2', 'C24', 'C25', 'C26']
-        ]
+    config['local_features'] = [] # Paste randomly sampled feature names here. 
+    config['boost_features'] = [ [], [], [], [], [], []]  # Paste randomly sampled passive party features here.
 
     logging.info("Initializing models ...")
 

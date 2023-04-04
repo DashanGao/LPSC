@@ -12,8 +12,8 @@ from utils.utils import configuration
 
 # 1. Active party local training. 
 def train_local_model(config):
-    config['local_features'] = []  
-    config['boost_features'] = []
+    config['local_features'] = [] # Paste randomly sampled local features here.
+    config['boost_features'] = [ [], [], [], [], []] # Paste randomly sampled passive party boosting features here.
     config["train_local_flag"] = True
     config["save_model"] = False
     config["local_model"] = None
