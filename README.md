@@ -1,20 +1,17 @@
-# Privacy for Free: Label Privacy Source Coding in Vertical Federated Learning
-
-
---------
+# Label Privacy Source Coding in Vertical Federated Learning
 
 ## Abstract
 
 We study label privacy protection in vertical federated learning (VFL).
-VFL enables an active party who possesses labeled data to improve model performance (utility) by collaborating with passive parties who have auxiliary features. 
+VFL enables an active party who possesses labeled data to improve model performance (utility) by collaborating with passive parties who have auxiliary features.
 Recently, there has been a growing concern for protecting label privacy against semi-honest passive parties who may surreptitiously deduce private labels from the output of their bottom models.
 However, existing studies do not remove the prior label information in the active party's features from labels in an offline phase, thus leaking unnecessary label privacy to passive parties.
-In contrast to existing methods which focus on training-phase perturbation, we propose a novel data pre-processing approach to protect label privacy without compromising utility. 
-Specifically, we first formulate a Label Privacy Source Coding (LPSC) problem to remove the redundant label information contained in the active party's features from labels, by assigning each sample a new weight and label (i.e., residual) for federated training.
-We give a privacy guarantee and theoretically prove that gradient boosting efficiently optimizes the LPSC problem. 
+In contrast to existing methods that focus on training-phase perturbation, we propose a novel offline-phase data cleansing approach to protect label privacy without compromising utility.
+Specifically, we first formulate a Label Privacy Source Coding (LPSC) problem to remove the redundant label information present in the active party's features from labels, by assigning each sample a new weight and label (i.e., residual) for federated training.
+We give a privacy guarantee and theoretically prove that gradient boosting efficiently optimizes the LPSC problem.
 Therefore, we propose Vertical Federated Gradient Boosting (VFGBoost) framework to address the LPSC problem.
 Moreover, given that LPSC only provides fixed privacy enhancement,
-VFGBoost further enables a flexible privacy-utility trade-off by incorporating adversarial training during federated training. 
+VFGBoost further enables a flexible privacy-utility trade-off by incorporating adversarial training during federated training.
 Experimental results on four real-world datasets substantiate the efficacy of LPSC and the superiority of our VFGBoost framework.
 
 --------
@@ -29,30 +26,29 @@ Experimental results on four real-world datasets substantiate the efficacy of LP
 
 This paper considers the multi-party vertical federated learning problem setting as follows:
 
-![Multi-party VFL](imgs/data_distribution7_.png)
+![Multi-party VFL](imgs/data_distribution_iclr_.png)
 
 The multi-party VFL problem setting. An active party $P_0$ owns uniformly-weighted labeled data $\{I, Y, X_0\}$. The passive parties ${\{P_i\}}_{i=1}^N$ have aligned unlabeled data $\{X_i\}_{i=1}^{N}$.
 
-
 ### LPSC v.s. Previous perturbation methods
 
-In this paper, we focus on defending label privacy leakage from forward embeddings. 
+In this paper, we focus on defending label privacy leakage from forward embeddings.
 
-![Vanilla VFL](imgs/vanilla_VFL6_.png)
+![Vanilla VFL](imgs/vanilla_VFL_iclr_.png)
 
-Vanilla VFL trains model with uniformly-weighted original labels $\mathcal{D}_{gt}=D(I,Y)$. A semi-honest passive party attacks label privacy from the forward embedding. Our LPSC replaces $\mathcal{D}_{gt}$ with optimized re-weighted residuals $\mathcal{D}_{lpsc}$ and enhances label privacy for free.
+Vanilla VFL trains model with uniformly-weighted original labels $p_{gt}(i,y)$. A semi-honest passive party attacks label privacy from the forward embedding. Our LPSC replaces $p_{gt}(i,y)$ with optimized re-weighted residuals $p_{lpsc}(i,y)$ and enhances label privacy for free.
 
-------
+--------
 
 ## Framework
 
-![VFGBoost Framework](imgs/framework16_.png)
+![VFGBoost Framework](imgs/framework_iclr_.png)
 
-The framework of VFGBoost. 
+The framework of VFGBoost.
 
-1. In the offline Label Privacy Source Coding (LPSC) phase, the active party $P_0$ computes the re-weighted residuals $\mathcal{D}_{lpsc}$ by training a local model $f_{\theta}$ on labeled data ${\{X_0^{loc}, Y^{loc}\}}$. 
+1. In the offline Label Privacy Source Coding (LPSC) phase, the active party $P_0$ computes the re-weighted residuals $\mathcal{D}_{lpsc} = (\mathbf{w}, \mathbf{r})$ by training a local model $f_{\theta}$ on labeled data ${\{\mathbf{i}^{loc}, X_0^{loc}, \mathbf{y}^{loc}\}}$.
 
-2. In the federated training phase, a federated model is trained via a utility objective (learn $\mathcal{D}_{lpsc}$, red arrows) and privacy objectives (unlearn $\mathcal{D}_{gt}$, green arrows) to further enable trading utility for privacy.
+2. In the federated training phase, a federated model is trained via a utility objective (learn $p_{lpsc}(i,y)$, red arrows) and privacy objectives (unlearn $p_{gt}(i,y)$, green arrows) to further enable trading utility for privacy.
 
 ------
 
@@ -85,22 +81,21 @@ The Statistics of each dataset are shown in Table .
 | MIMIC-III | 16,912/ 4228 | 714 | 0 | 7 |
 | Cardio    | 2,856/ 713 | 246 | 0 | 7 |
 
-**Table 1:** Statistics for all four datasets. {#tab_dataset}
-
+**Table 1:** Statistics for all four datasets.
 
 --------
 
 ## Model Architecture Details
 
-**[Criteo, Avazu]**: We use a popular deep learning model DeepFM by default for online advertising. 
+**[Criteo, Avazu]**: We use a popular deep learning model DeepFM by default for online advertising.
 DeepFM is a hybrid model that combines factorization machines and deep neural networks for recommendation tasks. It has two main components: a factorization machine that captures pairwise feature interactions and a deep neural network that learns higher-order interactions and non-linear dependencies. The model takes input features and passes them through both components before concatenating the outputs and passing them to a final output layer.
-We follow the default model architecture configurations in the DeepCTR framework. 
-All active and passive parties have the same deep model architecture. The embedding dimension is set as 4. 
-The architectures of EDCN, NFM and WDL used in the experiments are also the default model architecture configurations in the DeepCTR framework. 
+We follow the default model architecture configurations in the DeepCTR framework.
+All active and passive parties have the same deep model architecture. The embedding dimension is set as 4.
+The architectures of EDCN, NFM and WDL used in the experiments are also the default model architecture configurations in the DeepCTR framework.
 
 **[MIMIC-III, Cardio]**: We use a 3-layer MLP model in each party to learn the mortality rate in MIMIC-III and the cardiovascular disease in Cardio. The dimension of each layer are [128, 64, 1].
 
-----------
+--------
 
 ## Model Training Details
 
@@ -110,14 +105,15 @@ We use 5-fold validation to determine early stopping. There are 50% samples alig
 
 | Dataset   | Optimizer | lr    | Batch Size | Epoch |
 |-----------|-----------|-------|------------|-------|
-| Criteo    | Adam      | $1e-3$ | 2,048      | 5     |
-| Avazu     | Adam      | $1e-3$ | 4,096      | 5     |
-| MIMIC-III | Adam      | $1e-3$ | 16,912     | 200   |
-| Cardio    | Adam      | $1e-3$ | 2,856      | 200   |
+| Criteo    | Adam      | $1e-4$ | 2,048      | 5     |
+| Avazu     | Adam      | $5e-4$ | 4,096      | 5     |
+| MIMIC-III | Adam      | $5e-4$ | 16,912     | 200   |
+| Cardio    | Adam      | $5e-4$ | 2,856      | 200   |
 
-**Table 2:** Experimental settings for different datasets. {#tab_training_details}
+**Table 2:** Experimental settings for different datasets.
 
-----------
+--------
+
 ## Project structure
 
 The VFGBoost algorithm is implemented in `vertical_fl/fit_VFGBoost.py`
