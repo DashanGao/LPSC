@@ -72,7 +72,7 @@ https://www.kaggle.com/c/avazu-ctr-prediction
 
 
 
-The Statistics of each dataset are shown in Table .
+The Statistics of each dataset are shown in Table 1.
 
 | Dataset   | \# Train /Test | \#Num. Feature | \#Cate. Fields | \#Num. Parties |
 |-----------|----------------|----------------|----------------|----------------|
@@ -100,7 +100,7 @@ The architectures of EDCN, NFM and WDL used in the experiments are also the defa
 ## Model Training Details
 
 The models are optimized by Adam.
-Table 2 shows the mdoel trainng details on four datasets. We use the Adam optimizer. The boosting model weight $\alpha$ to 1, the privacy coefficient $\beta$ to 0.05.
+Table 2 shows the model training details on four datasets. We use the Adam optimizer. The boosting model weight $\alpha$ to 1, the privacy coefficient $\beta$ to 0.05.
 We use 5-fold validation to determine early stopping. There are 50% samples aligned across all parties.
 
 | Dataset   | Optimizer | lr    | Batch Size | Epoch |
