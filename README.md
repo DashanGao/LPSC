@@ -19,6 +19,33 @@ Experimental results on four real-world datasets substantiate the efficacy of LP
 
 --------
 
+### Requirements
+
+`torch, tensorboardX, deepctr_torch, tqdm, pandas, sklearn`
+
+--------
+
+### Problem Setting
+
+This paper considers the multi-party vertical federated learning problem setting as follows:
+
+![Multi-party VFL](imgs/data_distribution7.png)
+The multi-party VFL problem setting. An active party $P_0$ owns uniformly-weighted labeled data $\{I, Y, X_0\}$. The passive parties ${\{P_i\}}_{i=1}^N$ have aligned unlabeled data $\{X_i\}_{i=1}^{N}$.
+
+
+### LPSC v.s. Previous perturbation methods
+
+In this paper, we focus on defending label privacy leakage from forward embeddings. 
+![Vanilla VFL](imgs/vanilla_VFL6.png)
+Vanilla VFL trains model with uniformly-weighted original labels $\mathcal{D}_{gt}=D(I,Y)$. A semi-honest passive party attacks label privacy from the forward embedding. Our LPSC replaces $\mathcal{D}_{gt}$ with optimized re-weighted residuals $\mathcal{D}_{lpsc}$ and enhances label privacy for free.
+
+
+### Framework
+
+![VFGBoost Framework](imgs/framework16.png)
+
+------
+
 ## Dataset Preprocessing Details
 
 We work with four datasets in our experiments: two recommendation datasets (Criteo and Avazu) and two healthcare datasets (MIMIC-III and Cardio).
