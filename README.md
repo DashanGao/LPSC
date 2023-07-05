@@ -30,19 +30,29 @@ Experimental results on four real-world datasets substantiate the efficacy of LP
 This paper considers the multi-party vertical federated learning problem setting as follows:
 
 ![Multi-party VFL](imgs/data_distribution7.png)
+
 The multi-party VFL problem setting. An active party $P_0$ owns uniformly-weighted labeled data $\{I, Y, X_0\}$. The passive parties ${\{P_i\}}_{i=1}^N$ have aligned unlabeled data $\{X_i\}_{i=1}^{N}$.
 
 
 ### LPSC v.s. Previous perturbation methods
 
 In this paper, we focus on defending label privacy leakage from forward embeddings. 
+
 ![Vanilla VFL](imgs/vanilla_VFL6.png)
+
 Vanilla VFL trains model with uniformly-weighted original labels $\mathcal{D}_{gt}=D(I,Y)$. A semi-honest passive party attacks label privacy from the forward embedding. Our LPSC replaces $\mathcal{D}_{gt}$ with optimized re-weighted residuals $\mathcal{D}_{lpsc}$ and enhances label privacy for free.
 
+------
 
-### Framework
+## Framework
 
 ![VFGBoost Framework](imgs/framework16.png)
+
+The framework of VFGBoost. 
+
+1. In the offline Label Privacy Source Coding (LPSC) phase, the active party $P_0$ computes the re-weighted residuals $\mathcal{D}_{lpsc}$ by training a local model $f_{\theta}$ on labeled data ${\{X_0^{loc}, Y^{loc}\}}$. 
+
+2. In the federated training phase, a federated model is trained via a utility objective (learn $\mathcal{D}_{lpsc}$, red arrows) and privacy objectives (unlearn $\mathcal{D}_{gt}$, green arrows) to further enable trading utility for privacy.
 
 ------
 
