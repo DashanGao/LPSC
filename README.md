@@ -29,7 +29,7 @@ Experimental results on four real-world datasets substantiate the efficacy of LP
 
 This paper considers the multi-party vertical federated learning problem setting as follows:
 
-![Multi-party VFL](imgs/data_distribution7.png)
+![Multi-party VFL](imgs/data_distribution7_.png)
 
 The multi-party VFL problem setting. An active party $P_0$ owns uniformly-weighted labeled data $\{I, Y, X_0\}$. The passive parties ${\{P_i\}}_{i=1}^N$ have aligned unlabeled data $\{X_i\}_{i=1}^{N}$.
 
@@ -38,7 +38,7 @@ The multi-party VFL problem setting. An active party $P_0$ owns uniformly-weight
 
 In this paper, we focus on defending label privacy leakage from forward embeddings. 
 
-![Vanilla VFL](imgs/vanilla_VFL6.png)
+![Vanilla VFL](imgs/vanilla_VFL6_.png)
 
 Vanilla VFL trains model with uniformly-weighted original labels $\mathcal{D}_{gt}=D(I,Y)$. A semi-honest passive party attacks label privacy from the forward embedding. Our LPSC replaces $\mathcal{D}_{gt}$ with optimized re-weighted residuals $\mathcal{D}_{lpsc}$ and enhances label privacy for free.
 
@@ -46,7 +46,7 @@ Vanilla VFL trains model with uniformly-weighted original labels $\mathcal{D}_{g
 
 ## Framework
 
-![VFGBoost Framework](imgs/framework16.png)
+![VFGBoost Framework](imgs/framework16_.png)
 
 The framework of VFGBoost. 
 
