@@ -1,5 +1,5 @@
 """
-The VFGBoost algorithm.
+The LPSC algorithm.
 """
 
 import os
@@ -24,7 +24,7 @@ from utils.loss import KL_Loss, MSE_Loss, CE_Loss
 from utils.utils import get_best_performane_marker, process_input, init_tensorboard, load_data, save_training_result
 from utils.dp import add_laplace_noise, random_response
 
-class TrainerVFGBoost(object):
+class TrainerLPSC(object):
     def __init__(self, config=None):
         os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
         self.config = config

@@ -2,17 +2,9 @@
 
 ## Abstract
 
-We study label privacy protection in vertical federated learning (VFL).
-VFL enables an active party who possesses labeled data to improve model performance (utility) by collaborating with passive parties who have auxiliary features.
-Recently, there has been a growing concern for protecting label privacy against semi-honest passive parties who may surreptitiously deduce private labels from the output of their bottom models.
-However, existing studies do not remove the prior label information in the active party's features from labels in an offline phase, thus leaking unnecessary label privacy to passive parties.
-In contrast to existing methods that focus on training-phase perturbation, we propose a novel offline-phase data cleansing approach to protect label privacy without compromising utility.
-Specifically, we first formulate a Label Privacy Source Coding (LPSC) problem to remove the redundant label information present in the active party's features from labels, by assigning each sample a new weight and label (i.e., residual) for federated training.
-We give a privacy guarantee and theoretically prove that gradient boosting efficiently optimizes the LPSC problem.
-Therefore, we propose Vertical Federated Gradient Boosting (VFGBoost) framework to address the LPSC problem.
-Moreover, given that LPSC only provides fixed privacy enhancement,
-VFGBoost further enables a flexible privacy-utility trade-off by incorporating adversarial training during federated training.
-Experimental results on four real-world datasets substantiate the efficacy of LPSC and the superiority of our VFGBoost framework.
+We study label privacy protection in vertical federated learning (VFL). VFL enables an active party who possesses labeled data to improve model performance (utility) by collaborating with passive parties who have auxiliary features. Recently, there has been a growing concern for protecting label privacy against semi-honest passive parties who may surreptitiously deduce private labels from the output of their bottom models. However, existing studies do not remove the prior label information in the active party's features from labels in an offline phase, thus leaking unnecessary label privacy to passive parties.
+In contrast to existing methods that focus on training-phase perturbation, we propose a novel offline-phase data cleansing approach to protect label privacy barely compromising utility. Specifically, we first formulate a Label Privacy Source Coding (LPSC) problem to remove the redundant label information in the active party's features from labels, by assigning each sample a new weight and label (i.e., residual) for federated training. We theoretically demonstrate that LPSC satisfies mutual information privacy (MIP) and can be efficiently optimized using gradient boosting. Building on this, we propose a gradient boosting-based LPSC method to protect privacy barely compromising utility.
+Moreover, given that LPSC only provides bounded privacy enhancement, we further introduce the two-phase LPSC+ framework. This framework enables a flexible privacy-utility trade-off by incorporating training-phase perturbation methods, such as adversarial training. Experimental results on four real-world datasets substantiate the efficacy of LPSC and the superiority of our LPSC+ framework.
 
 --------
 
@@ -26,7 +18,7 @@ Experimental results on four real-world datasets substantiate the efficacy of LP
 
 This paper considers the multi-party vertical federated learning problem setting as follows:
 
-![Multi-party VFL](imgs/data_distribution_iclr_.png)
+![Multi-party VFL](imgs/data_distribution_ICDE.png)
 
 The multi-party VFL problem setting. An active party $P_0$ owns uniformly-weighted labeled data $\{I, Y, X_0\}$. The passive parties ${\{P_i\}}_{i=1}^N$ have aligned unlabeled data $\{X_i\}_{i=1}^{N}$.
 
@@ -34,7 +26,7 @@ The multi-party VFL problem setting. An active party $P_0$ owns uniformly-weight
 
 In this paper, we focus on defending label privacy leakage from forward embeddings.
 
-![Vanilla VFL](imgs/vanilla_VFL_iclr_.png)
+![Vanilla VFL](imgs/Vanilla_VFL_ICDE.png)
 
 Vanilla VFL trains model with uniformly-weighted original labels $p_{gt}(i,y)$. A semi-honest passive party attacks label privacy from the forward embedding. Our LPSC replaces $p_{gt}(i,y)$ with optimized re-weighted residuals $p_{lpsc}(i,y)$ and enhances label privacy for free.
 
@@ -42,15 +34,17 @@ Vanilla VFL trains model with uniformly-weighted original labels $p_{gt}(i,y)$. 
 
 ## Framework
 
-![VFGBoost Framework](imgs/framework_iclr_.png)
+![LPSC Framework](imgs/framework_LPSC_ICDE.png)
+The framework of LPSC.
 
-The framework of VFGBoost.
+![LPSC+ Framework](imgs/framework_LPSC_plus_ICDE.png)
+The framework of LPSC+Adversarial training.
 
-1. In the offline Label Privacy Source Coding (LPSC) phase, the active party $P_0$ computes the re-weighted residuals $\mathcal{D}_{lpsc} = (\mathbf{w}, \mathbf{r})$ by training a local model $f_{\theta}$ on labeled data ${\{\mathbf{i}^{loc}, X_0^{loc}, \mathbf{y}^{loc}\}}$.
+1. To achieve offline-phase cleansing phase, we conduct Label Privacy Source Coding (LPSC). The active party $P_0$ computes the re-weighted residuals $\mathcal{D}_{lpsc} = (\mathbf{w}, \mathbf{r})$ by training a local model $f_{\theta}$ on labeled data ${\{\mathbf{i}^{loc}, X_0^{loc}, \mathbf{y}^{loc}\}}$.
 
-2. In the federated training phase, a federated model is trained via a utility objective (learn $p_{lpsc}(i,y)$, red arrows) and privacy objectives (unlearn $p_{gt}(i,y)$, green arrows) to further enable trading utility for privacy.
+2. To achieve training-phase perturbation, a federated model is trained via a utility objective (learn $p_{lpsc}(i,y)$, red arrows) and privacy objectives (unlearn $p_{gt}(i,y)$, green arrows) to further enable trading utility for privacy.
 
-------
+------------
 
 ## Dataset Preprocessing Details
 
@@ -116,11 +110,11 @@ We use 5-fold validation to determine early stopping. There are 50% samples alig
 
 ## Project structure
 
-The VFGBoost algorithm is implemented in `vertical_fl/fit_VFGBoost.py`
+The proposed LPSC approach is implemented in `vertical_fl/fit_LPSC.py`
 
 The datasets are saved in `raw_data/`
 
-The running scripts for each dataset are: `run_VFGBoots_{dataset_name}.py`
+The running scripts for each dataset are: `run_LPSC_{dataset_name}.py`
 
 The checkpoints are saved in `checkpoints/`
 

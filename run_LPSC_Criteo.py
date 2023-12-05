@@ -2,7 +2,7 @@ import sys
 import logging
 import pandas
 from deepctr_torch.models import *
-from vertical_fl.fit_VFGBoost import TrainerVFGBoost
+from vertical_fl.fit_LPSC import TrainerLPSC
 from utils.utils import configuration
 
 
@@ -15,7 +15,7 @@ def train(config):
     logging.info("Initializing models ...")
 
     # Train the model
-    trainer = TrainerVFGBoost(config=config)
+    trainer = TrainerLPSC(config=config)
     trainer.init_all_models()
     trainer.load_data()
     trainer.fit()

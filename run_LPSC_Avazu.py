@@ -6,7 +6,7 @@ import sys
 import logging
 import pandas
 from deepctr_torch.models import *
-from vertical_fl.fit_VFGBoost import TrainerVFGBoost
+from vertical_fl.fit_LPSC import TrainerLPSC
 from utils.utils import configuration
 
 # 1. Active party local training. 
@@ -42,7 +42,7 @@ def test_local_model_and_save_to_csv(config):
 
 
 # 3. VFL. 
-def train_VFGBoost(config):
+def train_LPSC(config):
     configuration(config)
     config['local_features'] = []
     config['boost_features'] = []
@@ -127,4 +127,4 @@ if __name__ == '__main__':
     }
 
     # train_local_model(config_boosting)
-    # train_VFGBoost(config_boosting)
+    # train_LPSC(config_boosting)
