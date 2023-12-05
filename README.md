@@ -35,10 +35,10 @@ Vanilla VFL trains model with uniformly-weighted original labels $p_{gt}(i,y)$. 
 ## Framework
 
 ![LPSC Framework](imgs/framework_LPSC_ICDE.png)
-The framework of LPSC.
+The overview of LPSC for offline-phase cleansing.
 
 ![LPSC+ Framework](imgs/framework_LPSC_plus_ICDE.png)
-The framework of LPSC+Adversarial training.
+The overview of LPSC+Adversarial training which integrates offline-phase cleansing and training-phase perturbation for enhanced privacy protection.
 
 1. To achieve offline-phase cleansing phase, we conduct Label Privacy Source Coding (LPSC). The active party $P_0$ computes the re-weighted residuals $\mathcal{D}_{lpsc} = (\mathbf{w}, \mathbf{r})$ by training a local model $f_{\theta}$ on labeled data ${\{\mathbf{i}^{loc}, X_0^{loc}, \mathbf{y}^{loc}\}}$.
 
